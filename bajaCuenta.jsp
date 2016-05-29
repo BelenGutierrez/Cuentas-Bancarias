@@ -15,13 +15,13 @@
   <body>
     <%
       Class.forName("com.mysql.jdbc.Driver");
-      Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/cuentasbancarias","root", "");
+      Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/cuentasbancarias", "root", "");
       Statement s = conexion.createStatement();
 
-      s.execute ("DELETE FROM cuenta WHERE numero LIKE  '" + request.getParameter("numero") + "'");
-      
+      s.execute("DELETE FROM cuenta WHERE numero LIKE  '" + request.getParameter("numero") + "'");
+
       out.print("<script>document.location = \"index.jsp\"</script>");
     %>	
-    
+
   </body>
 </html>

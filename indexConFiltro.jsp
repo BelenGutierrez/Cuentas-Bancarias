@@ -24,8 +24,8 @@
     <title>Cuentas Bancarias</title>
 
     <style>
-      
-      
+
+
       body {
         height: 50em;
         background-color: #000;
@@ -36,20 +36,20 @@
       table, h2{
         background-color: grey;
       }
-      
+
       h2{
         margin: 0;
         padding:40px;
       }
-      
+
       table tr:nth-child(2n+2) {
         background-color: teal;
-       
+
       }
-       input{
+      input{
         background-color: #e0ebeb;
       }
-      
+
       nav a {
         position:  fixed;
         z-index: 2;
@@ -58,7 +58,7 @@
         text-align: center;
         margin: 2em 1em;
       }      
-      
+
       nav {
         height: 6em;
         background-color: grey;
@@ -68,7 +68,7 @@
         left: 0;
         width: 100%;
       }
-      
+
       div#busqueda {
         margin: 1em 1em;
       }
@@ -83,121 +83,127 @@
         margin: 0 auto;
         width: 40%;
       }
-      </style>
+    </style>
 
   </head>
   <body>
     <nav>
       <div id="busqueda">
         <form action="indexConFiltro.jsp" method="post">
-        <label class="control-label" for="busqueda">Busca el nombre de la entidad bancaria:</label>
-        <div class="input-group">
-          <span class="input-group-addon">
-            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-          </span>
-          <%
-          out.println("<input type=\"text\" class=\"form-control\" id=\"busqueda\" name=\"busqueda\"" + " placeholder=\"Buscar...\">");
+          <label class="control-label" for="busqueda">Busca el nombre de la entidad bancaria:</label>
+          <div class="input-group">
+            <span class="input-group-addon">
+              <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+            </span>
+            <%
+              out.println("<input type=\"text\" class=\"form-control\" id=\"busqueda\" name=\"busqueda\"" + " placeholder=\"Buscar...\">");
             %>
-            
-          </form>
-           
-        </div>   
-      </div>
-       <a style="margin: 2.2em 45% 0 0" class="btn btn-danger" href="index.jsp" role="button">
-         <span class="glyphicon glyphicon-remove"></span> Eliminar Filtro</a> 
-       <a href="login.html" class="btn btn-primary"><span class="glyphicon glyphicon-home"></span> Cerrar sesión</a><!--</button> -->
-    </nav>    
-    
-     <div class="container">
-       
-      <br><br>			
-      <div class="panel ">
-        <div class="panel-heading text-center"><h2>Cuentas Offshore</h2></div>
-          
 
-    <%
-      Class.forName("com.mysql.jdbc.Driver");
-      Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/cuentasbancarias", "root", "");
-      Statement s = conexion.createStatement();
-      
-      /// Carga todas las filas en un resulset al que le llamo listado
-      String consulta =( "SELECT * FROM cuenta WHERE banco LIKE '%" + request.getParameter("busqueda") + "%'");
-      ResultSet listado = s.executeQuery("SELECT * FROM cuenta WHERE banco LIKE '%" + request.getParameter("busqueda") + "%'");
-      out.println(consulta);
-    %>
-    
-    <table class="table-bordered table-hover">
-     
-      <tr><th>Numero</th><th>Banco</th><th>Titular</th><th>Origen</th><th>Apertura</th><th>Saldo</th><th></th><th></th></tr>
-      
-      <form action="altaCuenta.jsp"  method="get">
-        <tr>    <td><input type="text" name="numero" size="25"></td>
-                  <td><input type="text" name="banco" size="25"></td>
-                  <td><input type="text" name="titular" size="25"></td>
-                  <td><input type="text" name="origen" size="25"></td>
-                  <td><input type="text" name="apertura" size="10"></td>
-                  <td><input type="text" name="saldo" size="10"></td>
-                  <td><button type="submit" value="Añadir" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Añadir</button></td>
-                  <td></td>
-                    </tr>    
-             </form>
-     
-     
+        </form>
+
+      </div>   
+    </div>
+    <a style="margin: 2.2em 45% 0 0" class="btn btn-danger" href="index.jsp" role="button">
+      <span class="glyphicon glyphicon-remove"></span> Eliminar Filtro</a> 
+    <a href="login.html" class="btn btn-primary"><span class="glyphicon glyphicon-home">
+
+      </span> Cerrar sesión</a><!--</button> -->
+
+  </nav>    
+
+  <div class="container">
+
+    <br><br>			
+    <div class="panel ">
+      <div class="panel-heading text-center"><h2>Cuentas Offshore</h2></div>
+
+
       <%
-            /// Comprueba los campos del listado
-            while (listado.next()) {
-              
-              out.println("<tr><td>");
-              
-              out.println(listado.getString("numero") + "</td>");
-        
-              out.println("<td>" + listado.getString("banco") + "</td>");
-             
-              out.println("<td>" + listado.getString("titular") + "</td>");
-            
-              out.println("<td>" + listado.getString("origen") + "</td>");
-           
-              out.println("<td>" + listado.getString("apertura") + "</td>");
-          
-              out.println("<td>" + listado.getString("saldo") + "</td>");
+        Class.forName("com.mysql.jdbc.Driver");
+        Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/cuentasbancarias", "root", "");
+        Statement s = conexion.createStatement();
 
-         
-            
-          %>
-          
-         
-      <td>
-             <form  action="modificaCuenta.jsp" >
-              <input type="hidden" name="numero" value="<%=listado.getString("numero")%>">
-              <input type="hidden" name="banco" value="<%=listado.getString("banco")%>">
-              <input type="hidden" name="titular" value="<%=listado.getString("titular")%>">
-              <input type="hidden" name="origen" value="<%=listado.getString("origen")%>">
-              <input type="hidden" name="apertura" value="<%=listado.getString("apertura")%>">
-              <input type="hidden" name="saldo" value="<%=listado.getString("saldo")%>">
-              <button type="submit"  class="btn btn-info"><span class="glyphicon glyphicon-pencil"></span> Modificar</button>
-           </form>
-          </td>
-         
-          
-          <td>
-            <form method="get" action="preguntarBaja.jsp">
-              <input type="hidden" name="numero" value="<%=listado.getString("numero")%>"/>
-              <button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> Eliminar</button>
-            </form>
-          </td></tr>
-         
-             <%
-            } // while   
+        /// Carga todas las filas en un resulset al que le llamo listado
+        String consulta = ("SELECT * FROM cuenta WHERE banco LIKE '%" + request.getParameter("busqueda") + "%'");
+        ResultSet listado = s.executeQuery("SELECT * FROM cuenta WHERE banco LIKE '%" + request.getParameter("busqueda") + "%'");
 
-          
-          %>
-      
-      
-           </table>
-        </div>
-     </div>    
-      <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
-      <!-- Latest compiled and minified JavaScript -->
-     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-  </body>
+      %>
+
+      <table class="table-bordered table-hover">
+
+        <tr><th>Numero</th><th>Banco</th><th>Titular</th><th>Origen</th><th>Apertura</th><th>Saldo</th><th></th><th></th></tr>
+
+        <form action="altaCuenta.jsp"  method="get">
+          <tr>    <td><input type="text" name="numero" size="25"></td>
+            <td><input type="text" name="banco" size="25"></td>
+            <td><input type="text" name="titular" size="25"></td>
+            <td><input type="text" name="origen" size="25"></td>
+            <td><input type="text" name="apertura" size="10"></td>
+            <td><input type="text" name="saldo" size="10"></td>
+            <td><button type="submit" value="Añadir" class="btn btn-primary">
+                <span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;&nbsp;&nbsp; Añadir</button></td>
+
+            <td><button type="reset" value="Añadir" class="btn btn-danger">
+                <span class="glyphicon glyphicon-remove"></span>&nbsp;Borrar&nbsp;&nbsp;</button></td>
+          </tr>    
+        </form>
+
+
+        <%        /// Comprueba los campos del listado
+          while (listado.next()) {
+
+            out.println("<tr><td>");
+
+            out.println(listado.getString("numero") + "</td>");
+
+            out.println("<td>" + listado.getString("banco") + "</td>");
+
+            out.println("<td>" + listado.getString("titular") + "</td>");
+
+            out.println("<td>" + listado.getString("origen") + "</td>");
+
+            out.println("<td>" + listado.getString("apertura") + "</td>");
+
+            out.println("<td>" + listado.getString("saldo") + "</td>");
+
+
+        %>
+
+        <td>
+          <form  action="modificaCuenta.jsp" >
+            <input type="hidden" name="numero" value="<%=listado.getString("numero")%>">
+            <input type="hidden" name="banco" value="<%=listado.getString("banco")%>">
+            <input type="hidden" name="titular" value="<%=listado.getString("titular")%>">
+            <input type="hidden" name="origen" value="<%=listado.getString("origen")%>">
+            <input type="hidden" name="apertura" value="<%=listado.getString("apertura")%>">
+            <input type="hidden" name="saldo" value="<%=listado.getString("saldo")%>">
+            <button type="submit"  class="btn btn-info"><span class="glyphicon glyphicon-pencil"></span> Modificar</button>
+          </form>
+        </td>
+
+
+        <td>
+          <form method="get" action="preguntarBaja.jsp">
+            <input type="hidden" name="numero" value="<%=listado.getString("numero")%>"/>
+            <button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> Eliminar</button>
+          </form>
+        </td></tr>
+
+        <%
+          } // while   
+
+
+        %>
+
+
+      </table>
+    </div>
+  </div>    
+  <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+
+
+</body>
 </html>

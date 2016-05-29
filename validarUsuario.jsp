@@ -30,29 +30,29 @@
       Class.forName("com.mysql.jdbc.Driver");
       Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/cuentasbancarias", "root", "");
       Statement s = conexion.createStatement();
-      
+
       /// Accedo a la base de datos de los usuarios
       ResultSet usuarios = s.executeQuery("SELECT * FROM clave");
 
       boolean acceso = false;
       while (usuarios.next()) {
-      /// Si el nombre del usuario O la contraseña no son correctos, enviame a loginError sino continua
-        if ((request.getParameter("idUsuario").equals(usuarios.getString("usuario"))) &&
-               (request.getParameter("passUsuario").equals(usuarios.getString("pass")))) {
+        /// Si el nombre del usuario O la contraseña no son correctos, enviame a loginError sino continua
+        if ((request.getParameter("idUsuario").equals(usuarios.getString("usuario")))
+                && (request.getParameter("passUsuario").equals(usuarios.getString("pass")))) {
           out.print("<script>document.location = \"index.jsp\"</script>");
-        } 
+        }
       }
-      
+
       if (!acceso) {
         out.print("<script>document.location = \"loginError.html\"</script>");
       }
-      
-      
-    %>
-    
 
-      <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
-      <!-- Latest compiled and minified JavaScript -->
-     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+    %>
+
+
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
   </body>
 </html>
